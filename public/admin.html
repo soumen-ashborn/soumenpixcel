@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin — PIXCEL</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080A0F;--bg2:#10141D;--card:#151B26;--cyan:#00D9FF;--violet:#8B5CF6;--tx:#F5F7FA;--tx2:#A5ADBA;--bd:rgba(255,255,255,.12)}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--tx);font:400 15px/1.55 Inter,system-ui,sans-serif;min-height:100vh}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+[hidden]{display:none!important}
+input,select,textarea{font:inherit;color:var(--tx);background:rgba(255,255,255,.05);border:1px solid var(--bd);border-radius:8px;padding:10px 12px;min-height:44px;width:100%}
+select option{background:var(--bg2)}textarea{min-height:90px;resize:vertical}
+label{display:grid;gap:5px;font-size:.82rem;color:var(--tx2)}
+.chk{display:flex;flex-direction:row;align-items:center;gap:8px}.chk input{width:20px;min-height:20px}
+.btn{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--cyan);color:var(--cyan);background:transparent;font:600 .78rem 'JetBrains Mono',monospace;letter-spacing:.06em;cursor:pointer}
+.btn.pri{background:var(--cyan);color:#041018}.btn.sm{min-height:34px;padding:0 12px;font-size:.7rem}.btn.dng{border-color:#ff7b8a;color:#ff7b8a}.btn:disabled{opacity:.5;cursor:wait}
+#login{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(60% 50% at 50% 0,rgba(139,92,246,.18),transparent)}
+.box{width:min(410px,100%);background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:32px;display:grid;gap:16px}
+.box small{font:.72rem 'JetBrains Mono';color:var(--cyan);letter-spacing:.14em}.box h1{font-size:1.6rem}
+.pw{position:relative}.pw button{position:absolute;right:4px;top:4px;height:36px;background:none;border:0;color:var(--tx2);cursor:pointer;font-size:.8rem}
+.err{color:#ff7b8a;min-height:1.4em;font-size:.88rem}.back{color:var(--tx2);font-size:.85rem;text-align:center}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid #041018;border-right-color:transparent;border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px;margin-right:8px}@keyframes s{to{transform:rotate(360deg)}}
+#app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+aside{background:var(--bg2);border-right:1px solid var(--bd);padding:22px 14px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh}
+aside b{font:700 1.05rem 'Space Grotesk';letter-spacing:.16em;padding:0 10px}aside small{font:.7rem 'JetBrains Mono';color:var(--cyan);padding:0 10px 16px}
+aside button.t,aside a.t{text-align:left;background:none;border:0;color:var(--tx2);padding:11px 12px;border-radius:8px;cursor:pointer;font:500 .92rem Inter;text-decoration:none;display:block}
+aside .t[aria-current=true]{background:rgba(255,255,255,.06);color:var(--cyan)}aside .sp{flex:1}
+main{padding:28px max(18px,3vw);min-width:0}main h2{font-size:1.6rem;margin-bottom:18px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:22px}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px}.stat b{display:block;font:700 1.8rem 'Space Grotesk'}.stat span{color:var(--tx2);font-size:.8rem}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:18px;margin-bottom:22px}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;align-items:end}.form .wide{grid-column:1/-1}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:700px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--bd);vertical-align:middle;font-size:.9rem}th{font:500 .72rem 'JetBrains Mono';color:var(--tx2)}
+td img.th{width:72px;height:54px;object-fit:cover;border-radius:6px;display:block}
+.pill{font:.7rem 'JetBrains Mono';padding:3px 9px;border-radius:99px;border:1px solid var(--bd);white-space:nowrap}.pill.ok{color:#4ade80;border-color:#4ade80}.pill.wait{color:#fbbf24;border-color:#fbbf24}
+.drop{border:1px dashed var(--bd);border-radius:12px;padding:22px;text-align:center;color:var(--tx2)}
+.queue{display:grid;gap:12px;margin-top:14px}
+.qi{display:grid;grid-template-columns:90px 1fr;gap:14px;background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:10px;padding:12px}
+.qi img{width:90px;height:70px;object-fit:cover;border-radius:6px}.qi .f{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;align-items:end}
+.st{font:.72rem 'JetBrains Mono'}.st.ok{color:#4ade80}.st.bad{color:#ff7b8a}
+.recent{display:flex;gap:10px;flex-wrap:wrap}.recent img{width:96px;height:72px;object-fit:cover;border-radius:8px}
+.filt{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}.filt input,.filt select{width:auto;flex:1;min-width:150px}
+#toast{position:fixed;right:18px;bottom:18px;padding:12px 18px;border-radius:10px;background:var(--bg2);border:1px solid var(--cyan);z-index:9;max-width:80vw}#toast.bad{border-color:#ff7b8a}
+.pimg{width:120px;height:120px;border-radius:50%;object-fit:cover;border:1px solid var(--bd)}
+@media(max-width:800px){#app{grid-template-columns:1fr}aside{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center}aside small{padding-bottom:0}aside .sp{display:none}.qi{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="login" hidden>
+  <form class="box" id="lf" novalidate>
+    <div><small>PIXCEL · ADMIN</small><h1>Sign in</h1></div>
+    <label>Email<input name="email" type="email" autocomplete="username" required></label>
+    <label>Password<span class="pw"><input name="password" id="pw" type="password" autocomplete="current-password" required><button type="button" id="showpw" aria-pressed="false">Show</button></span></label>
+    <p class="err" id="lerr" role="alert"></p>
+    <button class="btn pri" type="submit" id="lbtn">SIGN IN</button>
+    <a class="back" href="/">← Back to website</a>
+  </form>
+</div>
+<div id="app" hidden>
+  <aside><b>PIXCEL</b><small>Admin dashboard</small>
+    <button class="t" data-v="home">Overview</button><button class="t" data-v="up">Upload photographs</button><button class="t" data-v="ph">Manage photographs</button><button class="t" data-v="cat">Categories</button><button class="t" data-v="pro">Profile &amp; About</button><button class="t" data-v="msg">Messages</button>
+    <span class="sp"></span><a class="t" href="/" target="_blank" rel="noopener">View website</a><button class="btn dng" id="logout">LOG OUT</button></aside>
+  <main id="main" tabindex="-1"></main>
+</div>
+<div id="toast" role="status" hidden></div>
+<script src="admin.js"></script>
+</body>
+</html>
